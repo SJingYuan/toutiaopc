@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import ElementUI from 'element-ui'// 引入模块
 import 'element-ui/lib/theme-chalk/index'// 引入样式
+import '@/styles/index.less'
 Vue.config.productionTip = false
 Vue.use(ElementUI)// 全局注册
 new Vue({
