@@ -84,9 +84,15 @@ export default {
           method: 'post'
         })
           .then(res => {
-            console.log(res)
+            window.localStorage.setItem('user-token', res.data.data.token)
+            this.$router.push('/home')
           })
-          .catch(() => {})
+          .catch(() => {
+            // 提示消息
+            // 第一种用法
+            // this.$message({ message: '用户名或者密码错误', type: 'error' })
+            this.$message.error('用户名或者密码错误')
+          })
       })
     }
   }
