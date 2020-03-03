@@ -4,21 +4,21 @@
      <div class='title'>
          <img src="../../assets/img/logo_admin.png" alt="">
      </div>
-     <!-- 导航菜单 -->
+     <!-- 导航 -->
      <el-menu background-color="#323745" text-color="#adafb5">
-         <!-- 子菜单 -->
+         <!-- 一级导航 -->
          <el-menu-item>
              <i class='el-icon-s-home'></i>
              <span>首页</span>
          </el-menu-item>
-         <!-- 二级菜单 需要用submenu -->
+         <!-- 二级导航 -->
          <el-submenu>
              <template slot="title">
                 <i  class='el-icon-s-grid'></i>
-                <span >内容管理</span>
+                <span>内容管理</span>
              </template>
              <!-- 匿名插槽-->
-             <!-- 二级菜单项 -->
+             <!-- 二级导航项 -->
              <el-menu-item>发布文章</el-menu-item>
              <el-menu-item>内容列表</el-menu-item>
              <el-menu-item>评论列表</el-menu-item>
@@ -30,7 +30,7 @@
                  <i class='el-icon-s-opportunity'></i>
                  <span>粉丝管理</span>
                </template>
-             <!-- 二级菜单项 -->
+             <!-- 二级导航项-->
              <el-menu-item>图文数据</el-menu-item>
              <el-menu-item>粉丝概况</el-menu-item>
              <el-menu-item>粉丝画像</el-menu-item>

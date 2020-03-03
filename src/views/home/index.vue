@@ -9,7 +9,7 @@
     <el-container>
       <!-- 右侧顶部 -->
       <el-header>
-        <h1>右侧顶部</h1>
+       <right-header></right-header>
       </el-header>
       <!-- 右侧内容区域 -->
       <el-main>
@@ -22,11 +22,9 @@
 </template>
 
 <script>
-import leftAside from '@/components/home/left-aside'
+
 export default {
-  components: {
-    'left-aside': leftAside
-  }
+
 }
 </script>
 
