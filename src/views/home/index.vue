@@ -2,8 +2,8 @@
   <!-- 容器 -->
   <el-container>
     <!-- 侧边容器 -->
-    <el-aside>
-      <h1>左侧导航</h1>
+    <el-aside style="width:240px">
+      <left-aside></left-aside>
     </el-aside>
     <!-- 右侧容器 -->
     <el-container>
@@ -22,7 +22,12 @@
 </template>
 
 <script>
-export default {}
+import leftAside from '@/components/home/left-aside'
+export default {
+  components: {
+    'left-aside': leftAside
+  }
+}
 </script>
 
 <style>
