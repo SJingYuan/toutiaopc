@@ -10,12 +10,12 @@
       <el-row type="flex" justify="end" align="middle" v-bind="user">
         <img :src="user.photo" alt />
         <!-- 下拉菜单 -->
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" @command="quit">
           <span>{{user.name}}</span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人信息</el-dropdown-item>
-            <el-dropdown-item>git地址</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-item command="one">个人信息</el-dropdown-item>
+            <el-dropdown-item command="two">git地址</el-dropdown-item>
+            <el-dropdown-item command="three">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-row>
@@ -29,6 +29,19 @@ export default {
   data () {
     return {
       user: {}
+    }
+  },
+  methods: {
+    quit (command) {
+      if (command === 'one') {
+
+      } else if (command === 'two') {
+        window.location.href = 'https://github.com/SJingYuan/toutiaopc'
+      } else {
+        // 退出删除缓存
+        localStorage.removeItem('user-token')
+        this.$router.push('/login')
+      }
     }
   },
   created () {

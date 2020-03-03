@@ -12,8 +12,7 @@
        <right-header></right-header>
       </el-header>
       <!-- 右侧内容区域 -->
-      <el-main>
-        <h1>右侧内容</h1>
+      <el-main style="padding:0">
         <!-- 二级容器 -->
         <router-view></router-view>
       </el-main>
