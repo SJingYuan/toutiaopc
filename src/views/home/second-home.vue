@@ -22,10 +22,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang='less' scoped>
 .second-home{
   height: calc(100vh - 60px);
   background-size: cover;
-  background-image: url("../../assets/img/joke.jpg");
+  /* background-image: url("../../assets/img/joke.jpg"); */
 }
 </style>

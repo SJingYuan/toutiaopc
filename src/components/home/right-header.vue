@@ -45,14 +45,10 @@ export default {
     }
   },
   created () {
-    const token = localStorage.getItem('user-token')
     this.$axios({
-      url: '/user/profile', // 请求地址
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      url: '/user/profile' // 请求地址
     }).then(res => {
-      this.user = res.data.data
+      this.user = res.data
     })
   }
 }

@@ -82,7 +82,7 @@ export default {
           method: 'post'
         })
           .then(res => {
-            window.localStorage.setItem('user-token', res.data.data.token)
+            window.localStorage.setItem('user-token', res.data.token)
             this.$router.push('/home')
           })
           .catch(() => {

@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '@/views/home'
 import Login from '@/views/login'
 import secondHome from '@/views/home/second-home'
+import Picture from '@/views/home/picture'
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,6 +19,14 @@ const routes = [
       {
         path: '',
         component: secondHome
+      },
+      {
+        path: 'picture',
+        component: Picture
+      },
+      {
+        path: 'comment',
+        component: () => import('@/views/comment')
       }
     ]
   },
