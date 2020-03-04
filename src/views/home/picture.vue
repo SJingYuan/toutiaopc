@@ -1,6 +1,6 @@
 <template>
   <div class="echart">
-    <div id="chart_example" :style="{width:'600px',height:'500px'}"></div>
+    <div id="chart_example" :style="{width:'100%',height:'600px'}"></div>
   </div>
 </template>
 
@@ -8,14 +8,15 @@
 export default {
   methods: {
     Echart () {
-      const chartExample = this.$echarts.init(
+      const isechart = require('echarts')
+      const chartExample = isechart.init(
         document.getElementById('chart_example')
       )
       var dataCount = 5e5
       var data = generateData(dataCount)
       function generateData (count) {
         var baseValue = Math.random() * 1000
-        var time = +new Date(2011, 0, 1)
+        var time = +new Date(2020, 0, 1)
         var smallBaseValue
 
         function next (idx) {
@@ -32,7 +33,7 @@ export default {
 
         for (var i = 0; i < count; i++) {
           categoryData.push(
-            this.$echarts.format.formatTime('yyyy-MM-dd\nhh:mm:ss', time)
+            isechart.format.formatTime('yyyy-MM-dd\nhh:mm:ss', time)
           )
           valueData.push(next(i).toFixed(2))
           time += 1000
@@ -45,7 +46,7 @@ export default {
       }
       chartExample.setOption({
         title: {
-          text: this.$echarts.format.addCommas(dataCount) + ' Data',
+          text: '粉丝数据',
           left: 10
         },
         toolbox: {
@@ -102,7 +103,7 @@ export default {
     }
   },
   mounted () {
-    // console.log(this.$echarts)
+    // console.log(this.isechart)
     this.Echart()
     // console.log(this)
   }
@@ -110,4 +111,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
+// .echart{
+// // background-image: url('../../assets/img/joke.jpg');
+// }
 </style>
