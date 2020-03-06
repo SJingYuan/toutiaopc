@@ -2,7 +2,7 @@
   <!-- 容器 -->
   <el-container>
     <!-- 侧边容器 -->
-    <el-aside style="width:240px">
+    <el-aside style="width:240px; background-color:#2e2f32">
       <left-aside></left-aside>
     </el-aside>
     <!-- 右侧容器 -->

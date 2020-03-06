@@ -5,8 +5,12 @@
  * ****/
 import axios from 'axios'
 import router from '@/router'
+import JSONBigint from 'json-bigint'
 // 拦截器及其他操作
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0' // 配置公共的请求头地址
+axios.defaults.transformResponse = [function (data) {
+  return data ? JSONBigint.parse(data) : {}
+}]
 
 // 请求拦截器的开发
 axios.interceptors.request.use(function (con) {

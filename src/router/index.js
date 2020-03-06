@@ -4,6 +4,7 @@ import Home from '@/views/home'
 import Login from '@/views/login'
 import secondHome from '@/views/home/second-home'
 import Picture from '@/views/home/picture'
+import Fansinfo from '@/views/home/fansinfo'
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,6 +28,10 @@ const routes = [
       {
         path: 'comment',
         component: () => import('@/views/comment')
+      },
+      {
+        path: 'fansinfo',
+        component: Fansinfo
       }
     ]
   },
