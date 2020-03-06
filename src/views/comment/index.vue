@@ -52,6 +52,7 @@ export default {
     },
     // 获取数据
     getData () {
+      this.loading = true
       this.$axios({
         url: '/articles',
         params: {
@@ -62,6 +63,7 @@ export default {
       }).then(res => {
         this.list = res.data.results
         this.page.total = res.data.total_count
+        this.loading = false
       })
     },
     formatterBool (row, column, cellValue, index) {

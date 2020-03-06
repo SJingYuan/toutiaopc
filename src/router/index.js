@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '@/views/home'
 import Login from '@/views/login'
 import secondHome from '@/views/home/second-home'
-import Picture from '@/views/home/picture'
-import Fansinfo from '@/views/home/fansinfo'
+import Picture from '@/views/picture'
+import Fansinfo from '@/views/fansinfo'
 Vue.use(VueRouter)
 
 const routes = [
@@ -32,6 +32,10 @@ const routes = [
       {
         path: 'fansinfo',
         component: Fansinfo
+      },
+      {
+        path: 'material',
+        component: () => import('@/views/material')
       }
     ]
   },

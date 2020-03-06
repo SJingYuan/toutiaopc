@@ -28,10 +28,10 @@
            <el-submenu index='2'>
                <template slot="title">
                  <i class='el-icon-s-opportunity'></i>
-                 <span>看这里</span>
+                 <span>粉丝管理</span>
                </template>
              <!-- 二级导航项-->
-             <el-menu-item index='/home/picture'>look at me</el-menu-item>
+             <el-menu-item index='/home/picture'>粉丝数据</el-menu-item>
              <el-menu-item index='/home/fansinfo'>粉丝概况</el-menu-item>
              <el-menu-item index='/home/fansphoto'>粉丝画像</el-menu-item>
              <el-menu-item index='/home/fanslist'>粉丝列表</el-menu-item>
