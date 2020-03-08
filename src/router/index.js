@@ -40,6 +40,10 @@ const routes = [
       {
         path: 'arctiles',
         component: () => import('@/views/arctiles')
+      },
+      {
+        path: 'publish/:articleId?',
+        component: () => import('@/views/publish')
       }
     ]
   },

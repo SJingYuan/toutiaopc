@@ -46,7 +46,10 @@
       </div>
       <!-- 右 -->
       <div class="item-right">
-        <span>
+        <!-- 事件绑定 -->
+        <!-- <span @click="toPublish"> -->
+        <!-- 事件跟逻辑 -->
+        <span @click="$router.push(`/home/publish/${item.id.toString()}`)">
           <i class="el-icon-edit"></i> 修改
         </span>
         <span @click="delSucai(item.id.toString())">
@@ -57,14 +60,13 @@
     <!-- 分页 -->
     <el-row type="flex" justify="center" style="height:80px" align="middle">
       <el-pagination
-       :current-page="page.currentPage"
-      :page-size="page.pageSize"
-      :total="page.total"
-      @current-change="changePage"
-      background
-      layout="prev,pager,next">
-
-      </el-pagination>
+        :current-page="page.currentPage"
+        :page-size="page.pageSize"
+        :total="page.total"
+        @current-change="changePage"
+        background
+        layout="prev,pager,next"
+      ></el-pagination>
     </el-row>
   </el-card>
 </template>
@@ -125,17 +127,23 @@ export default {
     }
   },
   methods: {
+    // 修改
+    toPublish () {
+      this.$router.push('/home/publish')
+    },
     // 删除
     delSucai (id) {
       this.$confirm('您是否删除该数据嘛', '提示').then(() => {
         this.$axios({
           method: 'delete',
           url: `/articles/${id}`
-        }).then(() => {
-          this.changeCondition()
-        }).catch(() => {
-          this.$message.error('删除失败')
         })
+          .then(() => {
+            this.changeCondition()
+          })
+          .catch(() => {
+            this.$message.error('删除失败')
+          })
       })
     },
     // 分页
@@ -150,8 +158,14 @@ export default {
         per_page: this.page.pageSize,
         status: this.searchForm.status === 5 ? null : this.searchForm.status,
         channel_id: this.searchForm.channel_id,
-        begin_pubdate: this.searchForm.value1 && this.searchForm.value1.length ? this.searchForm.value1[0] : null,
-        end_pubdate: this.searchForm.value1 && this.searchForm.value1.length ? this.searchForm.value1[1] : null
+        begin_pubdate:
+          this.searchForm.value1 && this.searchForm.value1.length
+            ? this.searchForm.value1[0]
+            : null,
+        end_pubdate:
+          this.searchForm.value1 && this.searchForm.value1.length
+            ? this.searchForm.value1[1]
+            : null
       }
       this.getArticles(params)
     },
