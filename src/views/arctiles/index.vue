@@ -6,6 +6,7 @@
     <el-form style="padding-left:50px">
       <el-form-item label="文章状态：">
         <!-- 单选组 -->
+        <!-- <el-radio-group v-model="searchForm.status" @change="changeCondition"> -->
         <el-radio-group v-model="searchForm.status">
           <el-radio :label="5">全部</el-radio>
           <el-radio :label="0">草稿</el-radio>
@@ -16,13 +17,15 @@
       </el-form-item>
       <!-- 下拉框 -->
       <el-form-item label="频道类别：">
+        <!-- <el-select @change="changeCondition" placeholder="请选择频道" v-model="searchForm.channel_id"> -->
         <el-select placeholder="请选择频道" v-model="searchForm.channel_id">
           <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
       </el-form-item>
       <!-- 时间 -->
       <el-form-item label="日期范围：">
-        <el-date-picker v-model="searchForm.value1" type="daterange"></el-date-picker>
+        <el-date-picker value-format="yyyy-MM-dd" v-model="searchForm.value1" type="daterange"></el-date-picker>
+        <!-- <el-date-picker @change="changeCondition" value-format="yyyy-MM-dd" v-model="searchForm.value1" type="daterange"></el-date-picker> -->
       </el-form-item>
     </el-form>
     <!-- 主体 -->
@@ -33,9 +36,7 @@
     <div class="article-item" v-for="item in list" :key="item.id.toString()">
       <!-- 左 -->
       <div class="item-left">
-        <img
-          :src="item.cover.images.length?item.cover.images[0]:defaultImg"
-          alt="" >
+        <img :src="item.cover.images.length?item.cover.images[0]:defaultImg" alt />
         <div class="info">
           <span>{{item.title}}</span>
           <!-- <span >草稿</span> -->
@@ -48,11 +49,23 @@
         <span>
           <i class="el-icon-edit"></i> 修改
         </span>
-        <span>
+        <span @click="delSucai(item.id.toString())">
           <i class="el-icon-delete"></i> 删除
         </span>
       </div>
     </div>
+    <!-- 分页 -->
+    <el-row type="flex" justify="center" style="height:80px" align="middle">
+      <el-pagination
+       :current-page="page.currentPage"
+      :page-size="page.pageSize"
+      :total="page.total"
+      @current-change="changePage"
+      background
+      layout="prev,pager,next">
+
+      </el-pagination>
+    </el-row>
   </el-card>
 </template>
 
@@ -60,6 +73,11 @@
 export default {
   data () {
     return {
+      page: {
+        currentPage: 1,
+        pageSize: 10,
+        total: 0
+      },
       searchForm: {
         status: 5, // 默认值（全部）
         channel_id: null,
@@ -68,6 +86,16 @@ export default {
       channels: [],
       list: [],
       defaultImg: require('../../assets/img/kb.jpeg')
+    }
+  },
+  // 第二种监听
+  watch: {
+    searchForm: {
+      deep: true,
+      handler () {
+        this.page.currentPage = 1
+        this.changeCondition()
+      }
     }
   },
   filters: {
@@ -97,6 +125,36 @@ export default {
     }
   },
   methods: {
+    // 删除
+    delSucai (id) {
+      this.$confirm('您是否删除该数据嘛', '提示').then(() => {
+        this.$axios({
+          method: 'delete',
+          url: `/articles/${id}`
+        }).then(() => {
+          this.changeCondition()
+        }).catch(() => {
+          this.$message.error('删除失败')
+        })
+      })
+    },
+    // 分页
+    changePage (newPage) {
+      this.page.currentPage = newPage
+      this.changeCondition()
+    },
+    // 筛选
+    changeCondition () {
+      const params = {
+        page: this.page.currentPage,
+        per_page: this.page.pageSize,
+        status: this.searchForm.status === 5 ? null : this.searchForm.status,
+        channel_id: this.searchForm.channel_id,
+        begin_pubdate: this.searchForm.value1 && this.searchForm.value1.length ? this.searchForm.value1[0] : null,
+        end_pubdate: this.searchForm.value1 && this.searchForm.value1.length ? this.searchForm.value1[1] : null
+      }
+      this.getArticles(params)
+    },
     // 获取类别
     getChannels () {
       this.$axios({
@@ -106,11 +164,13 @@ export default {
       })
     },
     // 获取文章列表
-    getArticles () {
+    getArticles (params) {
       this.$axios({
-        url: '/articles' // 请求地址
+        url: '/articles',
+        params // 请求地址
       }).then(result => {
         this.list = result.data.results // 获取文章列表
+        this.page.total = result.data.total_count
       })
     }
   },

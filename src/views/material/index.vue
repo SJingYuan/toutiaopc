@@ -38,7 +38,7 @@
         :current-page="page.currentPage"
         :page-size="page.pageSize"
         layout="prev,pager,next"
-        @current_change="changeCurrent"
+        @current-change="changeCurrent"
       ></el-pagination>
     </el-row>
     <el-dialog @opened="openEnd" :visible="dialogVisible" @close="dialogVisible=false">
