@@ -22,7 +22,7 @@
       <el-form-item label="封面" prop="cover" style="margin-top:100px">
         <!-- 单选框组 -->
         <!-- 封面单选组 绑定的是 封面cover中的type -->
-        <el-radio-group v-model="publishForm.cover.type">
+        <el-radio-group  v-model="publishForm.cover.type" @change="changeType">
           <!-- 需要给每个el-radio 加上 label属性 -->
           <el-radio :label="1">单图</el-radio>
           <el-radio :label="3">三图</el-radio>
@@ -30,11 +30,10 @@
           <el-radio :label="-1">自动</el-radio>
         </el-radio-group>
       </el-form-item>
+      <cover-img @selectTwoImg="receiveImg" :list="publishForm.cover.images"></cover-img>
       <el-form-item label="频道" prop="channel_id">
         <!-- select选择器 -->
         <el-select placeholder="请选择频道" v-model="publishForm.channel_id">
-          <!-- 下拉选项 v-for 循环生成 el-option-->
-          <!-- label 显示值  value 保存值 -->
           <el-option v-for="item in channels" :label="item.name" :value="item.id" :key="item.id"></el-option>
         </el-select>
       </el-form-item>
@@ -83,7 +82,39 @@ export default {
       }
     }
   },
+  watch: {
+    $route: function (to, from) {
+      if (to.params.articleId) {
+        this.getArticleById(to.params.articleId)
+      } else {
+        this.publishForm = {
+          title: '', // 文章标题
+          content: '', // 文章内容
+          cover: {
+            type: 0,
+            images: []
+          },
+          channel_id: null // 频道id
+        }
+      }
+    }
+  },
   methods: {
+    receiveImg (url, index) {
+      this.publishForm.cover.images.splice(index, 1, url)
+    },
+    // 改变类型事件
+    changeType () {
+      //  我们应该根据type的值对 images进行控制
+      if (this.publishForm.cover.type === 1) {
+        // 单图模式
+        this.publishForm.cover.images = [''] // 此时还没有选择图片 所以 给一个空字符
+      } else if (this.publishForm.cover.type === 3) {
+        this.publishForm.cover.images = ['', '', ''] // 此时还没有选择图片 所以 给3个空字符
+      } else {
+        this.publishForm.cover.images = [] // 无图或者自动时 给一个空数组
+      }
+    },
     // 获取文章数据
     getArticleById (id) {
       this.$axios({
