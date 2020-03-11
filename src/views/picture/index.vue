@@ -102,7 +102,7 @@ export default {
       })
     }
   },
-  mounted () {
+  created () {
     // console.log(this.isechart)
     this.Echart()
     // console.log(this)

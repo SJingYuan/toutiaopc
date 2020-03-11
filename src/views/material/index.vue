@@ -14,10 +14,14 @@
       <el-tab-pane label="全部素材" name="all">
         <div class="imgList">
           <el-card class="imgCrad" v-for="(item,index) in list" :key="item.id">
-            <img :src="item.url" alt="" @click="selectImg(index)">
+            <img :src="item.url" alt @click="selectImg(index)" />
             <el-row class="yang" type="flex" justify="space-around" align="middle">
-              <i class="el-icon-star-on" @click="collectOrCancel(item)" :style="{color:item.is_collected?'red':'black'}"></i>
-              <i @click="deleteImg(item)"  class="el-icon-delete-solid"></i>
+              <i
+                class="el-icon-star-on"
+                @click="collectOrCancel(item)"
+                :style="{color:item.is_collected?'red':'black'}"
+              ></i>
+              <i @click="deleteImg(item)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
         </div>
@@ -25,7 +29,7 @@
       <el-tab-pane label="收藏素材" name="collect">
         <div class="imgList">
           <el-card class="imgCrad" v-for="(item,index) in list" :key="item.id">
-            <img :src="item.url" alt=""   @click="selectImg(index)">
+            <img :src="item.url" alt @click="selectImg(index)" />
           </el-card>
         </div>
       </el-tab-pane>
@@ -44,7 +48,7 @@
     <el-dialog @opened="openEnd" :visible="dialogVisible" @close="dialogVisible=false">
       <el-carousel ref="myCarousel" indicator-position="outside" height="400px">
         <el-carousel-item v-for="item in list" :key="item.id">
-          <img style="width:100%; height:100%" :src="item.url" alt="" >
+          <img style="width:100%; height:100%" :src="item.url" alt />
         </el-carousel-item>
       </el-carousel>
     </el-dialog>
@@ -75,18 +79,19 @@ export default {
       this.clickIndex = index
       this.dialogVisible = true
     },
-    collectOrCancel (row) {
-      this.$axios({
-        method: 'put',
-        url: `/user/images/${row.id}`,
-        data: {
-          collect: !row.is_collected
-        }
-      }).then(() => {
+    async  collectOrCancel (row) {
+      try {
+        await this.$axios({
+          method: 'put',
+          url: `/user/images/${row.id}`,
+          data: {
+            collect: !row.is_collected
+          }
+        })
         this.getData()
-      }).catch(() => {
+      } catch (error) {
         this.$message.error('收藏失败')
-      })
+      }
     },
     deleteImg (row) {
       this.$confirm('确定要删除嘛', '提示').then(() => {
@@ -155,7 +160,7 @@ export default {
     margin: 20px 30px;
     position: relative;
     img {
-      width:100%;
+      width: 100%;
       height: 100%;
     }
     .yang {

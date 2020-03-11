@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import eventButs from '@/utils/eventButs'
 export default {
   data () {
     return {
@@ -59,6 +60,7 @@ export default {
         data
       }).then(result => {
         this.formData.photo = result.data.photo
+        eventButs.$emit('updateUser')
       })
     },
     saveUser () {
@@ -69,6 +71,7 @@ export default {
           data: this.formData
         }).then(() => {
           this.$message.success('保存成功')
+          eventButs.$emit('updateUser')
         }).catch(() => {
           this.$message.error('保存失败')
         })

@@ -1,5 +1,5 @@
 <template>
-  <div class="echart">
+  <div class="echart" style="width:100%">
     <div id="chart_example"></div>
   </div>
 </template>
@@ -212,7 +212,7 @@ export default {
 
 <style lang='less' scoped>
 #chart_example {
-  width: 1285px;
+  width: 1470px;
   height: 674px;
   color: aliceblue;
 }

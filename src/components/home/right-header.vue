@@ -2,7 +2,7 @@
   <el-row align="middle" type="flex" class="right-header">
     <!-- 左侧 -->
     <el-col class="left" :span="12">
-      <i class="el-icon-s-fold"></i>
+      <i @click="collapse=!collapse" :class="{'el-icon-s-fold':!collapse,'el-icon-s-unfold':collapse}"></i>
       <span>传智播客</span>
     </el-col>
     <!-- 右侧 -->
@@ -24,14 +24,23 @@
 </template>
 
 <script>
+import eventButs from '@/utils/eventButs'
 export default {
   // 个人信息
   data () {
     return {
-      user: {}
+      user: {},
+      collapse: false
     }
   },
   methods: {
+    getUser () {
+      this.$axios({
+        url: '/user/profile' // 请求地址
+      }).then(res => {
+        this.user = res.data
+      })
+    },
     quit (command) {
       if (command === 'one') {
 
@@ -44,11 +53,15 @@ export default {
       }
     }
   },
+  watch: {
+    collapse () {
+      eventButs.$emit('changeCollapse')
+    }
+  },
   created () {
-    this.$axios({
-      url: '/user/profile' // 请求地址
-    }).then(res => {
-      this.user = res.data
+    this.getUser()
+    eventButs.$on('updateUser', () => {
+      this.getUser()
     })
   }
 }

@@ -51,28 +51,28 @@ export default {
       this.getData()
     },
     // 获取数据
-    getData () {
+    async getData () {
       this.loading = true
-      this.$axios({
+      const res = await this.$axios({
         url: '/articles',
         params: {
           response_type: 'comment',
           page: this.page.currentPage,
           per_page: this.page.pageSize
         }
-      }).then(res => {
-        this.list = res.data.results
-        this.page.total = res.data.total_count
-        this.loading = false
       })
+      this.list = res.data.results
+      this.page.total = res.data.total_count
+      this.loading = false
     },
     formatterBool (row, column, cellValue, index) {
       return cellValue ? '正常' : '关闭'
     },
-    openOrclose (row) {
+    async openOrclose (row) {
       const str = row.comment_status ? '关闭' : '打开'
-      this.$confirm(`您确定要${str}评论嘛`, '提示！！').then(res => {
-        this.$axios({
+      await this.$confirm(`您确定要${str}评论嘛`, '提示！！')
+      try {
+        await this.$axios({
           url: '/comments/status',
           method: 'put',
           params: {
@@ -82,14 +82,11 @@ export default {
             allow_comment: !row.comment_status
           }
         })
-          .then(() => {
-            this.$message.success(`${str}评论成功`)
-            this.formatterBool()
-          })
-          .catch(() => {
-            this.$message.error(`${str}评论失败`)
-          })
-      })
+        this.$message.success(`${str}评论成功`)
+        this.formatterBool()
+      } catch (error) {
+        this.$message.error(`${str}评论失败`)
+      }
     }
   },
   created () {
